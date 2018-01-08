@@ -1,0 +1,11 @@
+{% extends "home/home_base.html" %}
+
+{% block home_active %}active{% endblock %}
+
+{% block home_content %}
+<form action="/" method="post">{% csrf_token %}
+  <h1 class="cover-heading">Bitcoin wallet, please.</h1>
+  <p><input id="wallet_number" name="wallet_number" type="text" class="form-control" placeholder="Wallet number" aria-label="Bitcoin wallet" aria-describedby="basic-addon1"></p>
+  <p><input class="btn btn-lg btn-secondary" type="submit" value="Go"></p>
+  </form>
+{% endblock %}

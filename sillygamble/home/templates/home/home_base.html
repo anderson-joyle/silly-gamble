@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrastyles %}
+<link rel="stylesheet" type="text/css" href="{% static 'front/css/cover.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="site-wrapper">
+   <div class="site-wrapper-inner">
+      <div class="cover-container">
+         <div class="masthead clearfix">
+            <div class="inner">
+               <h3 class="masthead-brand"><a class="navbar-brand" href="/">
+                <img src="{% static 'front/img/logo.svg' %}" width="45" height="45" alt="">
+              </a>Silly Gamble</h3>
+               <nav class="nav nav-masthead navbar-expand-md">
+                  <a class="nav-link {% block home_active %}{% endblock %}" href="/">Home</a>
+                  <a class="nav-link {% block howto_active %}{% endblock %}" href="/howto/">How to play</a>
+                  <a class="nav-link {% block about_active %}{% endblock %}" href="/about/">About</a>
+                  <a class="nav-link {% block trust_active %}{% endblock %}" href="/trust/">Trust me</a>
+               </nav>
+            </div>
+         </div>
+         {% block messages %}
+         {% if messages %}
+         {% for message in messages %}
+         <div class="alert alert-{% if messages.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+            {{ message|capfirst }}
+         </div>
+         {% endfor %}
+         {% endif %}
+         {% endblock messages %}
+         <div class="inner cover">
+            {% block home_content %}{% endblock %}
+        </div>
+         <div class="inner cover">
+         </div>
+         <div class="mastfoot">
+            <div class="inner">
+               <p>Silly Gamble @ 2017 | <a href="/responsable/">Be responsable</a></p>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

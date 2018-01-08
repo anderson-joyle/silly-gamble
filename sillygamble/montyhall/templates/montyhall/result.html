@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extrastyles %}{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+   <h5 class="navbar-brand" href=""><a class="navbar-brand" href="/">
+    <img src="{% static 'front/img/logo.svg' %}" width="32" height="32" alt="">
+  </a>Silly gamble</h5>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <!-- <a class="btn btn-outline-warning my-2 my-sm-0" href="/montyhall/reset/" role="button">Reset game</a> -->
+      {% if test_mode %}
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/montyhall/test/" role="button">Play again</a>
+      {% endif %}
+      <a class="btn btn-outline-danger my-2 my-sm-0" href="/montyhall/logout/" role="button">Logout</a>
+   </div>
+</nav>
+<main role="main">
+   <!-- Main jumbotron for a primary marketing message or call to action -->
+   <div class="jumbotron">
+      <div class="container">
+         {% if test_mode %}
+         <h1 class="display-3">TEST MODE</h1>
+         <p class="lead">You are playing in test mode. None of your actions will result in debit/credit. Have fun!</p>
+         <hr class="my-4">
+         {% else %}
+         <h1 class="display-3">Hello, stranger!</h1>
+         <p class="lead">Your balance is <b><i class="fa fa-btc" aria-hidden="true"></i>{{ amount_out }}</b>.<br>If this is your first try, kindly read the <a href="#instructions">instructions</a> down bellow. If you are familiar with, jump right to the <a href="#game">game</a>
+         <hr class="my-4">
+         {% endif %}
+         <p>This website doesn't apply any kind of trick to steal from you. If you are skeptical, and you always should be, please go to the skeptical section. For any assistance/question/suggestion e-mail us: <a href="mailto:sillygamble.help@outlook.com" target="_top">sillygamble.help@outlook.com</a></p>
+         <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#skeptic" role="button">I'm skeptic</a>
+         </p>
+      </div>
+   </div>
+   <main role="main" class="container">
+      <hr id="gaming">
+      <div class="row">
+         {% for card in cards %}
+         <div class="col-md-3 text-center">
+            {% if card == prize %}
+            <p><img border="0" alt="Card" src="{% static 'front/img/AS.png' %}"></p>
+            <p><small class="text-muted">{{ card }}</small></p>
+            <p>
+            <h4><span class="badge badge-success">Prize</span></h4>
+            </p>
+            {% else %}
+            <p><img border="0" alt="Card" src="{% static 'front/img/4D.png' %}"></p>
+            <p><small class="text-muted">{{ card }}</small></p>
+            {% if card == selected %}
+            <p>
+            <h4><span class="badge badge-dark">Selected card</span></h4>
+            </p>
+            {% endif %}
+            {% endif %}
+         </div>
+         {% endfor %}
+      </div>
+      <hr>
+      <h2 id="headings">
+         <div>Results<a class="anchorjs-link " href="#instructions" aria-label="Anchor" data-anchorjs-icon="#" style="padding-left: 0.375em;"></a>
+         </div>
+      </h2>
+      <div class="card-deck">
+         <div class="card border-secundary">
+            <div class="card-header bg-transparent border-secundary">Begining</div>
+            <div class="card-body text-secundary">
+               <h4 class="card-title">Game has started</h4>
+               <p class="card-text">You need to point which card do you think the prize is hidden in. You can do this by clicking on any SELECT button.</p>
+            </div>
+            <div class="card-footer bg-transparent border-secundary">Next step: THINKING</div>
+         </div>
+         <div class="card border-secundary">
+            <div class="card-header bg-transparent border-secundary">Thinking</div>
+            <div class="card-body text-secundary">
+               <h4 class="card-title">Keep it or change it</h4>
+               <p class="card-text">You have selected a card and now need either keep your choice or change to another card. We flipped a card showing where the prize IS NOT.</p>
+            </div>
+            <div class="card-footer bg-transparent border-secundary">Next step: RESULT</div>
+         </div>
+         {% if winner %}
+         <div class="card border-success">
+            <div class="card-header bg-transparent border-success">Result (you are here!)</div>
+            <div class="card-body text-success">
+               <h4 class="card-title"><i class="fa fa-smile-o" aria-hidden="true"></i> Well done!</h4>
+               <p class="card-text">Kindly note we process payments manually and can take 2 days. Please bear with us.</p>
+               {% if test_mode %}
+               <p class="card-text">I forgot, you are playing in test mode. Sorry, but no bitcoins for you.</p>
+               {% endif %}
+               <p>{% if test_mode %}<a class="btn btn-success btn-lg my-2 my-sm-0" href="/montyhall/test/#gaming" role="button"><i class="fa fa-repeat" aria-hidden="true"></i> Play again</a> {% endif %}<a class="btn btn-primary btn-lg" href="/montyhall/data/{{ game_data_id }}" role="button"><i class="fa fa-download" aria-hidden="true"> Data</i></a></p>
+            </div>
+            <div class="card-footer bg-transparent border-success">The end!</div>
+         </div>
+         {% else %}
+         <div class="card border-danger">
+            <div class="card-header bg-transparent border-danger">Result (you are here!)</div>
+            <div class="card-body text-danger">
+               <h4 class="card-title"><i class="fa fa-frown-o" aria-hidden="true"></i> Not this time</h4>
+               <p class="card-text">If you are skeptical, you can download the used game data for this session and compare the content with the SHA1 hash, available at bottom page.</p>
+               <p>{% if test_mode %}<a class="btn btn-success btn-lg my-2 my-sm-0" href="/montyhall/test/#gaming" role="button"><i class="fa fa-repeat" aria-hidden="true"></i> Play again</a> {% endif %}<a class="btn btn-primary btn-lg" href="/montyhall/data/{{ game_data_id }}" role="button"><i class="fa fa-download" aria-hidden="true"> Data</i></a></p>
+            </div>
+            <div class="card-footer bg-transparent border-danger">The end!</div>
+         </div>
+         {% endif %}
+      </div>
+      <br>
+      <hr>
+      <div id="skeptic" class="card text-white bg-dark">
+         <div class="card-body">
+            <h4 class="card-title">How can you be sure we didn't change the game while you were playing?</h4>
+            <p class="card-text">When you start a game, we generate game data, which contains since from begining which card hides the prize. This game data file can be downloaded after your current game finishes. We extract a SHA1 hash from file content, which you can find down below. Each card has its visible card id, which you can compare with game data prize card.</p>
+            <p class="card-text">You can use online tools to generate SHA1 hashes such as <a href="http://passwordsgenerator.net/sha1-hash-generator/">Password Generator</a> or <a href="http://onlinemd5.com/">Online MD5</a></p>
+            <p class="card-text"><b>SHA1: {{ checksum }}</b></p>
+         </div>
+      </div>
+   </main>
+   <!-- /container -->
+</main>
+<br>
+<br>
+{% endblock %}
+

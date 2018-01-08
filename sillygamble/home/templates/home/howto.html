@@ -1,0 +1,15 @@
+{% extends "home/home_base.html" %}
+
+{% block howto_active %}active{% endblock %}
+
+{% block home_content %}
+<p class="lead">First time? Try it in <a href="/montyhall/test/" class="badge badge-success">TEST MODE</a></p>
+<p class="lead">To play, transfer a small bitcoin amount ($10 - $30) to the following address. Once the transaction is confirmed, type your wallet number in home page.</p>
+<p><img src="https://api.qrserver.com/v1/create-qr-code/?data={{ wallet }}&amp;size=150x150" alt="" title="" /></p>
+<p><a href="https://live.blockcypher.com/btc/address/{{ wallet }}/">{{ wallet }}</a></p>
+<br>
+
+<div class="alert alert-warning" role="alert">
+IMPORTANT: If you transfer more than $30 USD in bitcoins we will transfer you the amount back, not refunding the network fee.
+</div>
+{% endblock %}

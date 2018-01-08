@@ -1,0 +1,12 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+    padding-top: 3.5rem;
+    /* background-color: #4d187e;
+    color: #ffffff; */
+  }
+
+  
+  .jumbotron {
+    /* background-color: #230a3b; */
+    padding: 2rem 1rem;
+  }

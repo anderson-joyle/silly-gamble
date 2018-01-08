@@ -1,0 +1,27 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrastyles %}<link rel="stylesheet" type="text/css" href="{% static 'front/css/cover.css' %}" />{% endblock %}
+
+{% block content %}
+
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="inner cover">
+				<h1>Oops!</h1>
+				<h2>Somenthing went wrong!</h2>
+					<p>If you were in the middle of something, your deposit is safe and you can come back to play again.</p><br>
+					<p><div class="alert alert-danger" role="alert">
+							Error message: <b>{{ exception }}
+					</div></p>
+					<p><a href="/" class="btn btn-info" role="button" aria-pressed="true">Take me home</a>  <a href="mailto:sillygamble.help@outlook.com" class="btn btn-secondary">
+							<i class="icon-envelope"></i> Contact Support </a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
